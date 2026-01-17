@@ -1,6 +1,11 @@
 # ToDo App & MySQL Deployment Instructions
+Ensure you have Docker installed
+Clone this repository to your local machine:
 
-Цей репозиторій містить інструкції щодо розгортання Docker-контейнерів для бази даних MySQL та Django-додатка.
+
+```bash
+git clone https://github.com/mate-academy/devops_todolist_docker_core_task_2_volumes.git
+```
 
 ---
 
@@ -28,12 +33,19 @@ Identify the IP address assigned to the mysql-server container. Look at "Contain
 docker network inspect bridge
 ```
 
-### 3.2 Запустіть додаток: 
+### 3.2 Change IP on your in todolist/settings: "Host"
+
+### 3.3 Build the docker app: 
 
 ```bash
-docker run -d -p 8080:8080 --name app -e DB_HOST=<use_this_ipv4_from_sql> exodus7707/todoapp:2.0.0
+docker build -t todoapp:2.0.0 .
 ```
 
+### 3.4 Run the docker app: 
+
+```bash
+docker run -d -p 8080:8080 --name app todoapp:2.0.0
+```
 
 
 ## 4. Accessing the Application using your Browser
