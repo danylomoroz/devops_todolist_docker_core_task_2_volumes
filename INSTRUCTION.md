@@ -11,18 +11,18 @@
 
 ---
 
-## 2. Запуск MySQL з Volume
-Спочатку запустіть базу даних. Використання Volume дозволяє зберігати дані навіть після видалення контейнера.
+## 2. Step 1: Run MySQL Server with Volume
+Start the MySQL container first to obtain its IP address. We use a volume for data persistence.
 
 ```bash
 docker run -d --name mysql-server -v mysql_data:/var/lib/mysql exodus7707/mysql-local:1.0.0
 ```
 
-## 3. Запуск контейнера з додатком (App)
+## 3. Step 2: Configure and Build the App
 
-### 3.1 Дізнайтеся IP-адресу контейнера бази даних. 
-У виводі цієї команди вам доведеться очима знайти розділ "Containers" і там побачити ваш mysql-server та його IP.:
-замініть <MYSQL_IP> на отриману адресу в todolist/settings.py: 'HOST'
+### 3.1 Find the MySQL Container IP
+Identify the IP address assigned to the mysql-server container. Look at "Containers" and "mysql-server". Copy ipv4
+
 
 ```bash
 docker network inspect bridge
@@ -31,9 +31,11 @@ docker network inspect bridge
 ### 3.2 Запустіть додаток: 
 
 ```bash
-docker run -d -p 8080:8080 --name app exodus/todoapp:2.0.0
+docker run -d -p 8080:8080 --name app -e DB_HOST=<use_this_ipv4_from_sql> exodus7707/todoapp:2.0.0
 ```
 
-## Доступ до додатка через браузер
+
+
+## 4. Accessing the Application using your Browser
 
 URL: http://localhost:8080
